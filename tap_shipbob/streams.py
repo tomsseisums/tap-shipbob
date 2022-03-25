@@ -72,37 +72,20 @@ class ProductsStream(ShipBobStream):
 
         th.Property("id", th.IntegerType),
         th.Property("reference_id", th.StringType),
-        th.Property("bundle_root_information", th.CustomType({"type": ["null", "string"]})),
+        th.Property("bundle_root_information", th.StringType),
         th.Property("created_date", th.DateTimeType),
-        th.Property("channel", th.ObjectType(
-            th.Property("id", th.IntegerType),
-            th.Property("name", th.StringType),
-        )),
+        th.Property("channel", th.CustomType({"type": ["object", "string"]})),
         th.Property("sku", th.StringType),
         th.Property("name", th.StringType),
-        th.Property("barcode", th.CustomType({"type": ["null", "string"]})),
-        th.Property("gtin", th.CustomType({"type": ["null", "string"]})),
-        th.Property("upc", th.CustomType({"type": ["null", "string"]})),
-        th.Property("unit_price", th.CustomType({"type": ["null", "string", "integer"]})),
+        th.Property("barcode", th.StringType),
+        th.Property("gtin", th.StringType),
+        th.Property("upc", th.StringType),
+        th.Property("unit_price", th.CustomType({"type": [ "string", "integer"]})),
         th.Property("total_fulfillable_quantity", th.IntegerType),
         th.Property("total_onhand_quantity", th.IntegerType),
         th.Property("total_committed_quantity", th.IntegerType),
-        th.Property("fulfillable_inventory_items", th.ArrayType(
-            th.ObjectType(
-                th.Property("id", th.IntegerType),
-                th.Property("name", th.StringType),
-                th.Property("quantity", th.IntegerType),
-            )
-        )),
-        th.Property("fulfillable_quantity_by_fulfillment_center", th.ArrayType(
-            th.ObjectType(
-                th.Property("id", th.IntegerType),
-                th.Property("name", th.StringType),
-                th.Property("fulfillable_quantity", th.IntegerType),
-                th.Property("onhand_quantity", th.IntegerType),
-                th.Property("committed_quantity", th.IntegerType),
-            )
-        ))
+        th.Property("fulfillable_inventory_items", th.CustomType({"type": ["array", "string"]})),
+        th.Property("fulfillable_quantity_by_fulfillment_center", th.CustomType({"type": ["array", "string"]}))
     ).to_dict()
 
 
@@ -119,10 +102,10 @@ class InventoryStream(ShipBobStream):
         th.Property("is_case_pick", th.BooleanType),
         th.Property("is_lot", th.BooleanType),
         th.Property("dimensions", th.ObjectType(
-            th.Property("weight", th.IntegerType),
-            th.Property("length", th.IntegerType),
-            th.Property("width", th.IntegerType),
-            th.Property("depth", th.IntegerType),
+            th.Property("weight", th.NumberType),
+            th.Property("length", th.NumberType),
+            th.Property("width", th.NumberType),
+            th.Property("depth", th.NumberType),
         )),
         th.Property("total_fulfillable_quantity", th.IntegerType),
         th.Property("total_onhand_quantity", th.IntegerType),
@@ -146,8 +129,8 @@ class InventoryStream(ShipBobStream):
         )),
         th.Property("fulfillable_quantity_by_lot", th.ArrayType(
             th.ObjectType(
-                th.Property("lot_number", th.CustomType({"type": ["null", "string", "integer"]})),
-                th.Property("expiration_date", th.CustomType({"type": ["null", "string", "integer"]})),
+                th.Property("lot_number", th.CustomType({"type": [ "string", "integer"]})),
+                th.Property("expiration_date", th.CustomType({"type": [ "string", "integer"]})),
                 th.Property("fulfillable_quantity", th.IntegerType),
                 th.Property("onhand_quantity", th.IntegerType),
                 th.Property("committed_quantity", th.IntegerType),
@@ -187,7 +170,7 @@ class LocationsStream(ShipBobStream):
         th.Property("access_granted", th.BooleanType),
         th.Property("attributes", th.ArrayType(th.StringType)),
         th.Property("services", th.ArrayType(
-            th.CustomType({"type": ["null", "object"]})
+            th.CustomType({"type": [ "object"]})
         )),
         th.Property("region", th.ObjectType(
             th.Property("id", th.IntegerType),
@@ -227,24 +210,24 @@ class OrdersStream(ShipBobStream):
         
         th.Property("id", th.IntegerType),
         th.Property("created_date", th.DateTimeType),
-        th.Property("purchase_date", th.CustomType({"type": ["null", "datetime"]})),
-        th.Property("reference_id", th.CustomType({"type": ["null", "string", "integer"]})),
-        th.Property("order_number", th.CustomType({"type": ["null", "string", "integer"]})),
+        th.Property("purchase_date", th.DateTimeType),
+        th.Property("reference_id", th.CustomType({"type": [ "string", "integer"]})),
+        th.Property("order_number", th.CustomType({"type": ["string", "integer"]})),
         th.Property("status", th.StringType),
         th.Property("type", th.StringType),
         th.Property("channel", th.ObjectType(
             th.Property("id", th.IntegerType),
             th.Property("name", th.StringType),
         )),
-        th.Property("shipping_method", th.CustomType({"type": ["null", "string"]})),
-        th.Property("recipient",  th.CustomType({"type": ["null", "object"]})),
+        th.Property("shipping_method", th.CustomType({"type": ["string"]})),
+        th.Property("recipient",  th.CustomType({"type": [ "object"]})),
         th.Property("products", th.ArrayType(th.StringType)),
         th.Property("tags", th.ArrayType(th.StringType)),
-        th.Property("shipments", th.ArrayType(th.CustomType({"type": ["null", "object"]}))),
-        th.Property("gift_message", th.CustomType({"type": ["null", "string"]})),
+        th.Property("shipments", th.ArrayType(th.CustomType({"type": [ "object"]}))),
+        th.Property("gift_message", th.CustomType({"type": [ "string"]})),
         th.Property("shipping_terms", th.ObjectType(
-            th.Property("carrier_type", th.CustomType({"type": ["null", "string"]})),
-            th.Property("payment_term", th.CustomType({"type": ["null", "string"]}))
+            th.Property("carrier_type", th.CustomType({"type": [ "string"]})),
+            th.Property("payment_term", th.CustomType({"type": [ "string"]}))
         )),
-        th.Property("retailer_program_data", th.CustomType({"type": ["null", "string"]}))
+        th.Property("retailer_program_data", th.CustomType({"type": ["object"]}))
     ).to_dict()

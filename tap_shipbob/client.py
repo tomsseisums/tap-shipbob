@@ -18,7 +18,7 @@ class ShipBobStream(RESTStream):
     """ShipBob stream class."""
 
     # TODO: Set the API's base URL here:
-    url_base = "https://api.mysample.com"
+    url_base = "https://api.shipbob.com/1.0"
 
     # OR use a dynamic url_base:
     # @property
@@ -34,13 +34,15 @@ class ShipBobStream(RESTStream):
         """Return a new authenticator object."""
         return BearerTokenAuthenticator.create_for_stream(
             self,
-            token=self.config.get("api_key")
+            token=self.config.get("access_token")
         )
 
     @property
     def http_headers(self) -> dict:
         """Return the http headers needed."""
-        headers = {}
+        headers = {
+            "Authorization": f"Bearer {self.config.get('access_token')}"
+        }
         if "user_agent" in self.config:
             headers["User-Agent"] = self.config.get("user_agent")
         # If not using an authenticator, you may also provide inline auth headers:
