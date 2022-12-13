@@ -65,12 +65,13 @@ class ShipBobStream(RESTStream):
 
     def post_process(self, row: dict, context: Optional[dict]) -> dict:
         """As needed, append or transform raw data to match expected structure."""
-        updated_date = row["created_date"]
-        shipments = row["shipments"]
-        if shipments:
-            shipment_dates = [parse(d["last_update_at"]) for d in shipments if d.get("last_update_at")]
-            if not shipment_dates:
-                shipment_dates = [parse(d["created_date"]) for d in shipments if d.get("created_date")]
-            updated_date = max(shipment_dates).isoformat()
-        row["updated_date"] = updated_date
+        if self.replication_key:
+            updated_date = row["created_date"]
+            shipments = row.get("shipments")
+            if shipments:
+                shipment_dates = [parse(d["last_update_at"]) for d in shipments if d.get("last_update_at")]
+                if not shipment_dates:
+                    shipment_dates = [parse(d["created_date"]) for d in shipments if d.get("created_date")]
+                updated_date = max(shipment_dates).isoformat()
+            row[self.replication_key] = updated_date
         return row
