@@ -8,10 +8,11 @@ from singer_sdk.authenticators import BearerTokenAuthenticator
 from singer_sdk.streams import RESTStream
 from pendulum import parse
 
+
 class ShipBobStream(RESTStream):
     """ShipBob stream class."""
 
-    url_base = "https://api.shipbob.com/1.0"
+    url_base = "https://api.shipbob.com/2.0"
 
     records_jsonpath = "$[*]"
     _page_size = 250
@@ -69,9 +70,17 @@ class ShipBobStream(RESTStream):
             updated_date = row["created_date"]
             shipments = row.get("shipments")
             if shipments:
-                shipment_dates = [parse(d["last_update_at"]) for d in shipments if d.get("last_update_at")]
+                shipment_dates = [
+                    parse(d["last_update_at"])
+                    for d in shipments
+                    if d.get("last_update_at")
+                ]
                 if not shipment_dates:
-                    shipment_dates = [parse(d["created_date"]) for d in shipments if d.get("created_date")]
+                    shipment_dates = [
+                        parse(d["created_date"])
+                        for d in shipments
+                        if d.get("created_date")
+                    ]
                 updated_date = max(shipment_dates).isoformat()
             row[self.replication_key] = updated_date
         return row

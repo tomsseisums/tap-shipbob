@@ -11,6 +11,7 @@ from tap_shipbob.streams import (
     LocationsStream,
     OrdersStream,
     ProductsStream,
+    MultipleWarehouseReceivingOrdersStream,
 )
 
 STREAM_TYPES = [
@@ -19,6 +20,7 @@ STREAM_TYPES = [
     LocationsStream,
     FullfillmentCentersStream,
     OrdersStream,
+    MultipleWarehouseReceivingOrdersStream,
 ]
 
 
