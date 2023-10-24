@@ -451,10 +451,10 @@ class OrdersStream(ShipBobStream):
                                 th.Property(
                                     "measurements",
                                     th.ObjectType(
-                                        th.Property("total_weight_oz", th.IntegerType),
-                                        th.Property("length_in", th.IntegerType),
-                                        th.Property("width_in", th.IntegerType),
-                                        th.Property("depth_in", th.IntegerType),
+                                        th.Property("total_weight_oz", th.NumberType),
+                                        th.Property("length_in", th.NumberType),
+                                        th.Property("width_in", th.NumberType),
+                                        th.Property("depth_in", th.NumberType),
                                     ),
                                 ),
                                 th.Property(
@@ -469,16 +469,16 @@ class OrdersStream(ShipBobStream):
                                                 th.ObjectType(
                                                     th.Property(
                                                         "total_weight_oz",
-                                                        th.IntegerType,
+                                                        th.NumberType,
                                                     ),
                                                     th.Property(
-                                                        "length_in", th.IntegerType
+                                                        "length_in", th.NumberType
                                                     ),
                                                     th.Property(
-                                                        "width_in", th.IntegerType
+                                                        "width_in", th.NumberType
                                                     ),
                                                     th.Property(
-                                                        "depth_in", th.IntegerType
+                                                        "depth_in", th.NumberType
                                                     ),
                                                 ),
                                             ),
@@ -491,10 +491,10 @@ class OrdersStream(ShipBobStream):
                     th.Property(
                         "measurements",
                         th.ObjectType(
-                            th.Property("total_weight_oz", th.IntegerType),
-                            th.Property("length_in", th.IntegerType),
-                            th.Property("width_in", th.IntegerType),
-                            th.Property("depth_in", th.IntegerType),
+                            th.Property("total_weight_oz", th.NumberType),
+                            th.Property("length_in", th.NumberType),
+                            th.Property("width_in", th.NumberType),
+                            th.Property("depth_in", th.NumberType),
                         ),
                     ),
                     th.Property("require_signature", th.BooleanType),
