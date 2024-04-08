@@ -12,7 +12,7 @@ from pendulum import parse
 class ShipBobStream(RESTStream):
     """ShipBob stream class."""
 
-    url_base = "https://api.shipbob.com/2.0"
+    url_base = "https://api.shipbob.com/1.0"
 
     records_jsonpath = "$[*]"
     _page_size = 250
